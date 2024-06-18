@@ -1,0 +1,39 @@
+.filters {
+    display: flex;
+    flex-direction: column;
+    // gap: 20px;
+    width: 232px;
+    height: 252px;
+    background-color: #fff;
+    padding: 20px 0;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 10%);
+    border-radius: 8px;
+
+    &__title {
+        margin-left: 20px;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: 0.5px;
+        color: #4A4A4A;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    &__label {
+        // transform: translate(20px);
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        line-height: 20px;
+        color: #4A4A4A;
+        min-height: 40px;
+
+        &:hover {
+            background-color: #F1FCFF;
+        }
+    }
+
+    .filter-wrapper {
+        margin-left: 20px;
+    }
+}

@@ -1,0 +1,29 @@
+@import '~open-sans-fontface/open-sans.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F3F7FA;
+    margin: 50px;
+}
+
+.app {
+    display: flex;
+    max-width: 900px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    gap: 20px;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+.list-wrapper {
+    /* margin: 0 auto; */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
