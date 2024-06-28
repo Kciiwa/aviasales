@@ -1,29 +1,61 @@
 @import '~open-sans-fontface/open-sans.css';
 
 * {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: #F3F7FA;
-    margin: 50px;
+  background-color: #f3f7fa;
+  margin: 50px;
 }
 
-.app {
-    display: flex;
-    max-width: 900px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    gap: 20px;
-    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+.app-wrapper {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  gap: 20px;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+
+  @media (max-width: 780px) {
+    & {
+      flex-direction: column;
+    }
+  }
 }
 
 .list-wrapper {
-    /* margin: 0 auto; */
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (max-width: 780px) {
+    & {
+      margin: 0 auto;
+    }
+  }
+}
+
+.logo {
+  position: relative;
+  width: 82px;
+  height: 98px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  background-image: url('https://kata-react-aviasales.dev.m1w.ru/static/media/globe.7f99fbbae5d61448eba65d2cc3f80d44.svg');
+}
+
+.aviasales-background-logo {
+  position: absolute;
+  top: 0;
+}
+
+.aviasales-plane-logo {
+  position: absolute;
+  z-index: 2;
+  top: 23px;
+  left: 17px;
 }

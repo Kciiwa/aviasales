@@ -1,22 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 
 import './tabList.scss'
+import { setSort } from '../../redux/reducers'
 
 function TabList() {
+  const dispatch = useDispatch()
+  const [activeTab, setActiveTab] = useState('cheapest')
+
   const tabs = [
-    { tabDescription: 'самый дешевый', isActive: true },
-    { tabDescription: 'самый быстрый', isActive: false },
-    { tabDescription: 'оптимальный', isActive: false },
+    { tabDescription: 'самый дешевый', sortOption: 'cheapest' },
+    { tabDescription: 'самый быстрый', sortOption: 'fastest' },
+    { tabDescription: 'оптимальный', sortOption: 'optimal' },
   ]
 
-  // const styles = ['tab-list__item']
+  const handleSortChange = (sortOption) => {
+    setActiveTab(sortOption)
+    dispatch(setSort(sortOption))
+  }
 
   return (
     <ul className="tab-list">
       {tabs.map((tab) => (
-        <li className={tab.isActive ? 'tab-list__item active-tab' : 'tab-list__item inactive-tab'}>
+        <button
+          type="button"
+          className={
+            tab.sortOption === activeTab
+              ? 'tab-list__item active-tab'
+              : 'tab-list__item inactive-tab'
+          }
+          key={uuidv4()}
+          onClick={() => handleSortChange(tab.sortOption)}
+        >
           {tab.tabDescription.toUpperCase()}
-        </li>
+        </button>
       ))}
     </ul>
   )
