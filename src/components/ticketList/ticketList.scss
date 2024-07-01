@@ -23,6 +23,7 @@
 
 .error-messages {
   position: fixed;
+  z-index: 100;
   width: 300px;
   height: auto;
   right: 20px;

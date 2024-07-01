@@ -1,8 +1,20 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-export const selectTickets = (state) => state.tickets
+export const selectTicketsState = (state) => state.tickets
 export const selectSort = (state) => state.sort
 export const selectFilters = (state) => state.filters
+
+export const selectTickets = createSelector(
+  selectTicketsState,
+  (ticketsState) => ticketsState.tickets
+)
+
+export const selectLoading = createSelector(
+  selectTicketsState,
+  (ticketsState) => ticketsState.loading
+)
+
+export const selectError = createSelector(selectTicketsState, (ticketsState) => ticketsState.error)
 
 export const selectSortedTickets = createSelector(
   [selectTickets, selectSort, selectFilters],

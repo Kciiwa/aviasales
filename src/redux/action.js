@@ -1,38 +1,46 @@
 /* eslint-disable no-promise-executor-return */
-import { addTickets, setLoading, addError } from './reducers'
 
-export const fetchTickets = (searchId) => async (dispatch) => {
-  let stop = false
-  dispatch(setLoading(true))
-  const maxAttempts = 10
-  let attempts = 0
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-  while (!stop) {
-    try {
-      const response = await fetch(
-        `https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`
-      )
-      if (!response.ok) {
-        throw new Error(`Status: ${response.status}`)
-      }
-      const data = await response.json()
-      dispatch(addTickets(data.tickets))
-      stop = data.stop
-    } catch (error) {
-      attempts++
-      dispatch(addError(error.message))
-      if (attempts >= maxAttempts) {
-        stop = true
-      } else {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+import { setLoading, addError, addTickets } from './reducers'
+
+export const fetchTickets = createAsyncThunk(
+  'tickets/fetchTickets',
+  async (searchId, { dispatch }) => {
+    const maxAttempts = 3
+    let attempts = 0
+    let stop = false
+
+    dispatch(setLoading(true))
+
+    while (!stop && attempts < maxAttempts) {
+      try {
+        const response = await fetch(
+          `https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`
+        )
+        if (!response.ok) {
+          throw new Error(`Status: ${response.status}`)
+        }
+        attempts = 0
+        const data = await response.json()
+        dispatch(addTickets(data.tickets))
+        stop = data.stop
+      } catch (error) {
+        attempts++
+        dispatch(addError(error.message))
+        if (attempts >= maxAttempts) {
+          console.error('Не удалось загрузить данные. Попробуйте позже.')
+        } else {
+          await new Promise((resolve) => setTimeout(resolve, 1000))
+        }
       }
     }
+
+    dispatch(setLoading(false))
   }
+)
 
-  dispatch(setLoading(false))
-}
-
-export const fetchSearchId = () => async (dispatch) => {
+export const fetchSearchId = createAsyncThunk('tickets/fetchSearchId', async (_, { dispatch }) => {
   const maxAttempts = 5
   let attempts = 0
 
@@ -40,7 +48,7 @@ export const fetchSearchId = () => async (dispatch) => {
     try {
       const response = await fetch('https://aviasales-test-api.kata.academy/search')
       if (!response.ok) {
-        throw new Error(`Status: ${response.status}`)
+        console.error(`Status: ${response.status}`)
       }
       const data = await response.json()
       const { searchId } = data
@@ -56,4 +64,4 @@ export const fetchSearchId = () => async (dispatch) => {
       }
     }
   }
-}
+})
